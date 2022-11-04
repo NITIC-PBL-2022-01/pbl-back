@@ -30,7 +30,4 @@ jobs:
         restore-keys: ${{ runner.os }}-go-
 
     - name: Build(dev)
-      run: just wire-dev build-dev
-
-    - name: Build(prod)
-      run: just wire-prod build-prod
+      run: just build
