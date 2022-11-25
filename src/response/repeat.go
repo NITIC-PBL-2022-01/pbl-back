@@ -9,7 +9,7 @@ type Repeat struct {
   Until string `json:"until"`
 }
 
-func ConvertToRepeat(repeat domain.Repeat) Repeat {
+func ConvertRepeat(repeat domain.Repeat) Repeat {
   return Repeat {
     Unit: repeat.Unit.Parse(),
     Value: repeat.Value,

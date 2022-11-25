@@ -8,7 +8,7 @@ type User struct {
   IsStudent bool `json:"is_student"`
 }
 
-func ConvertToResponse(user domain.User) User {
+func ConvertUser(user domain.User) User {
   return User {
     Email: user.Email,
     Name: user.Name,
