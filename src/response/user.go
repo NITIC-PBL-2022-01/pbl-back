@@ -10,7 +10,7 @@ type User struct {
 
 func ConvertUser(user domain.User) User {
   return User {
-    Email: user.Email,
+    Email: string(user.Email),
     Name: user.Name,
     IsStudent: user.IsStudent,
   }
