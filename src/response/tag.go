@@ -3,12 +3,12 @@ package response
 import "nitic-pbl-2022-01/pbl-back/src/domain"
 
 type Tag struct {
-  ID string
-  Name string
-  Color string
-  Admin []User
-  Member []User
-  Type string
+  ID string `json:"id"`
+  Name string `json:"name"`
+  Color string `json:"color"`
+  Admin []User `json:"admin"`
+  Member []User `json:"member"`
+  Type string `json:"type"`
 }
 
 func ConvertTag(tag domain.Tag) Tag {
