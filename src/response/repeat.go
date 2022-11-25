@@ -17,6 +17,6 @@ func ConvertRepeat(repeat domain.Repeat) Repeat {
     Unit: repeat.Unit.Parse(),
     Value: repeat.Value,
     Since: strconv.Itoa(int(repeat.Since.Unix())),
-    Until: strconv.Itoa((repeat.Until.Unix())),
+    Until: strconv.Itoa(int(repeat.Until.Unix())),
   }
 }
