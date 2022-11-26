@@ -31,6 +31,7 @@ type Repeat struct {
   Value int
   Since time.Time
   Until time.Time
+  EventID ID
 }
 
 func ConstructRepeat(unit RepeatUnit, value int, since time.Time, until time.Time) Repeat {
