@@ -34,7 +34,7 @@ func TestCreateTag(t *testing.T) {
   assert.Equal(t, created.Name, "hoge")
   assert.Equal(t, created.Admin[0].Email, email)
   assert.Equal(t, len(created.Member), 0)
-  assert.Equal(t, created.Type.Parse, domain.TagType(domain.None).Parse())
+  assert.Equal(t, created.Type.Parse(), domain.TagType(domain.None).Parse())
   assert.Equal(t, created.Color, "#fff")
 }
 
@@ -48,7 +48,7 @@ func TestGetByID(t *testing.T) {
   assert.Equal(t, fetched.Name, "hoge")
   assert.Equal(t, fetched.Admin[0].Email, domain.Email("test-data@example.com"))
   assert.Equal(t, len(fetched.Member), 0)
-  assert.Equal(t, fetched.Type.Parse, domain.TagType(domain.None).Parse())
+  assert.Equal(t, fetched.Type.Parse(), domain.TagType(domain.None).Parse())
   assert.Equal(t, fetched.Color, "#fff")
 }
 
@@ -71,7 +71,7 @@ func TestEditTag(t *testing.T) {
   assert.Equal(t, edited.Name, "fuga")
   assert.Equal(t, edited.Admin[0].Email, domain.Email("test-data@example.com"))
   assert.Equal(t, len(edited.Member), 0)
-  assert.Equal(t, edited.Type.Parse, domain.TagType(domain.Class).Parse())
+  assert.Equal(t, edited.Type.Parse(), domain.TagType(domain.Class).Parse())
   assert.Equal(t, edited.Color, "#000")
 
   edited.Name = "hoge"
@@ -100,7 +100,7 @@ func TestEditTagMember(t *testing.T) {
   assert.Equal(t, tag.Name, "hoge")
   assert.Equal(t, tag.Admin[0].Email, domain.Email("test-data@example.com"))
   assert.Equal(t, len(tag.Member), 1)
-  assert.Equal(t, tag.Type.Parse, domain.TagType(domain.None).Parse())
+  assert.Equal(t, tag.Type.Parse(), domain.TagType(domain.None).Parse())
   assert.Equal(t, tag.Color, "#fff")
 
   restored, err := mock.Tag.DeleteMemberFromTag(domain.ID("0"), []domain.User{user})
@@ -111,8 +111,8 @@ func TestEditTagMember(t *testing.T) {
   assert.Equal(t, restored.ID, domain.ID("0"))
   assert.Equal(t, restored.Name, "hoge")
   assert.Equal(t, restored.Admin[0].Email, domain.Email("test-data@example.com"))
-  assert.Equal(t, len(restored.Member), 1)
-  assert.Equal(t, restored.Type.Parse, domain.TagType(domain.None).Parse())
+  assert.Equal(t, len(restored.Member), 0)
+  assert.Equal(t, restored.Type.Parse(), domain.TagType(domain.None).Parse())
   assert.Equal(t, restored.Color, "#fff")
 }
 
@@ -126,12 +126,12 @@ func TestGetByUserEmail(t *testing.T) {
   assert.Equal(t, fetched[0].Name, "hoge")
   assert.Equal(t, fetched[0].Admin[0].Email, domain.Email("test-data@example.com"))
   assert.Equal(t, len(fetched[0].Member), 0)
-  assert.Equal(t, fetched[0].Type.Parse, domain.TagType(domain.None).Parse())
+  assert.Equal(t, fetched[0].Type.Parse(), domain.TagType(domain.None).Parse())
   assert.Equal(t, fetched[0].Color, "#fff")
 }
 
 func TestGetModeratingTags(t *testing.T) {
-  fetched, err := mock.Tag.GetModeratingTags(domain.ID("0"))
+  fetched, err := mock.Tag.GetModeratingTags(domain.Email("test-data@example.com"))
   if err != nil {
     t.Fatal(err)
   }
@@ -140,7 +140,7 @@ func TestGetModeratingTags(t *testing.T) {
   assert.Equal(t, fetched[0].Name, "hoge")
   assert.Equal(t, fetched[0].Admin[0].Email, domain.Email("test-data@example.com"))
   assert.Equal(t, len(fetched[0].Member), 0)
-  assert.Equal(t, fetched[0].Type.Parse, domain.TagType(domain.None).Parse())
+  assert.Equal(t, fetched[0].Type.Parse(), domain.TagType(domain.None).Parse())
   assert.Equal(t, fetched[0].Color, "#fff")
 }
 
@@ -171,10 +171,10 @@ func TestDeleteTag(t *testing.T) {
     t.Fatal(err)
   }
 
-  assert.Equal(t, deleted.ID, domain.ID("0"))
+  assert.Equal(t, deleted.ID, id)
   assert.Equal(t, deleted.Name, "hoge")
   assert.Equal(t, deleted.Admin[0].Email, domain.Email("test-data@example.com"))
   assert.Equal(t, len(deleted.Member), 0)
-  assert.Equal(t, deleted.Type.Parse, domain.TagType(domain.None).Parse())
+  assert.Equal(t, deleted.Type.Parse(), domain.TagType(domain.None).Parse())
   assert.Equal(t, deleted.Color, "#fff")
 }

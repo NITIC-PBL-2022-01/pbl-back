@@ -9,6 +9,6 @@ type TagRepository interface {
   DeleteMemberFromTag(id domain.ID, users []domain.User) (domain.Tag, error)
   GetByID(id domain.ID) (domain.Tag, error)
   GetByUserEmail(email domain.Email) ([]domain.Tag, error)
-  GetModeratingTags(id domain.ID) ([]domain.Tag, error)
+  GetModeratingTags(email domain.Email) ([]domain.Tag, error)
   DeleteTag(id domain.ID) (domain.Tag, error)
 }
