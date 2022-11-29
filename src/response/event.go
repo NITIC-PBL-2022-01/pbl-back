@@ -13,7 +13,7 @@ type Event struct {
   Detail string `json:"detail"`
   Tag Tag `json:"tag"`
   Color string `json:"color"`
-  AuthorName string `json:"author_name"`
+  AuthorEmail string `json:"author_email"`
   Location string `json:"location"`
   Repeat Repeat `json:"repeat"`
   IsToDo bool `json:"is_todo"`
@@ -29,7 +29,7 @@ func ConvertEvent(event domain.Event) Event {
     Detail: event.Detail,
     Tag: ConvertTag(event.Tag),
     Color: event.Color,
-    AuthorName: event.AuthorName,
+    AuthorEmail: string(event.AuthorEmail),
     Location: event.Location,
     Repeat: ConvertRepeat(event.Repeat),
     IsToDo: false,
@@ -46,7 +46,7 @@ func ConvertTodo(event domain.ToDo) Event {
     Detail: event.Detail,
     Tag: ConvertTag(event.Tag),
     Color: event.Color,
-    AuthorName: event.AuthorName,
+    AuthorEmail: string(event.AuthorEmail),
     Location: event.Location,
     Repeat: ConvertRepeat(event.Repeat),
     IsToDo: event.IsToDo,
