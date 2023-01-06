@@ -8,7 +8,7 @@ run: fmt
 test:
 	docker-compose build test
 	docker-compose up -d test-db test
-	docker-compose exec test go test ./...
+	docker-compose exec -T test go test ./...
 	docker-compose down
 
 build:
