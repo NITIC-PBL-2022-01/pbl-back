@@ -1,0 +1,32 @@
+version: "3"
+services:
+  test-db:
+    image: postgres:latest
+    container_name: test-db
+    ports:
+      - 5432:5432
+    env_file: .env.test
+  db:
+    image: postgres:latest
+    volumes:
+      - db-store:/var/lib/postgres/data
+    env_file: .env
+  test:
+    depends_on:
+      - test-db
+    build:
+      context: .
+      target: setup
+    image: pbl-back-test:latest
+    command: go run /src/main.go
+    env_file: .env.test
+  production:
+    depends_on:
+      - test-db
+    env_file: .env
+    build:
+      context: .
+      target: test
+    image: pbl-back-production:latest
+volumes:
+  db-store:
