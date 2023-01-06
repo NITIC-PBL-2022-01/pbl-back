@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"os"
+	"os/signal"
+	"syscall"
+)
 
 func main() {
-  fmt.Println("Hello, world")
+  sig := make(chan os.Signal, 1)
+  signal.Notify(sig, syscall.SIGTERM, syscall.SIGINT)
+
+  <-sig
 }
