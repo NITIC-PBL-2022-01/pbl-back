@@ -1,6 +1,10 @@
 package domain
 
+import "gorm.io/gorm"
+
 type User struct {
+  gorm.Model
+  ID ID `gorm:"primaryKey"`
   Email Email
   Name string
   IsStudent bool

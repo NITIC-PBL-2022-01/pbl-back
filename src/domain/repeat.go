@@ -1,6 +1,10 @@
 package domain
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type RepeatUnit int
 
@@ -27,6 +31,8 @@ func (unit RepeatUnit) Parse() string {
 }
 
 type Repeat struct {
+  gorm.Model
+  ID ID `gorm:"primaryKey"`
   Unit RepeatUnit
   Value int
   Since time.Time

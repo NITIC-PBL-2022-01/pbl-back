@@ -1,9 +1,14 @@
 package domain
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type EventBase struct {
-  ID ID
+  gorm.Model
+  ID ID `gorm:"primaryKey"`
   Date time.Time
   Duration time.Duration
   Title string

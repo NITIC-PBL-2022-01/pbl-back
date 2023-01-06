@@ -1,5 +1,7 @@
 package domain
 
+import "gorm.io/gorm"
+
 type TagType int
 
 const (
@@ -22,7 +24,8 @@ func (t TagType) Parse() string {
 }
 
 type Tag struct {
-  ID ID
+  gorm.Model
+  ID ID `gorm:"primaryKey"`
   Name string
   Color string
   Admin []User
