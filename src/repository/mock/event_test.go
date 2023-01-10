@@ -27,6 +27,12 @@ func TestCreateEvent(t *testing.T) {
     t.Fatal(err)
   }
 
+  user := domain.User{
+    Email: email,
+    Name: "山田 太郎",
+    IsStudent: true,
+  }
+
   event := domain.ConstructEvent(
     id,
     date,
@@ -35,7 +41,7 @@ func TestCreateEvent(t *testing.T) {
     "Detail",
     tag,
     "#000",
-    email,
+    user,
     "1号館",
     domain.ConstructRepeat(
       domain.Week,
@@ -57,7 +63,7 @@ func TestCreateEvent(t *testing.T) {
   assert.Equal(t, created.Detail, event.Detail)
   assert.Equal(t, created.Tag.ID, event.Tag.ID)
   assert.Equal(t, created.Color, event.Color)
-  assert.Equal(t, created.AuthorEmail, event.AuthorEmail)
+  assert.Equal(t, created.Author.Email, event.Author.Email)
   assert.Equal(t, created.Location, event.Location)
   assert.Equal(t, created.Repeat.Value, event.Repeat.Value)
 }
@@ -76,6 +82,12 @@ func TestUpdateEvent(t *testing.T) {
     t.Fatal(err)
   }
 
+  user := domain.User{
+    Email: email,
+    Name: "山田 太郎",
+    IsStudent: true,
+  }
+
   event := domain.ConstructEvent(
     domain.ID("0"),
     date,
@@ -84,7 +96,7 @@ func TestUpdateEvent(t *testing.T) {
     "Detail",
     tag,
     "#000",
-    email,
+    user,
     "1号館",
     domain.ConstructRepeat(
       domain.Week,
@@ -106,7 +118,7 @@ func TestUpdateEvent(t *testing.T) {
   assert.Equal(t, edited.Detail, event.Detail)
   assert.Equal(t, edited.Tag.ID, event.Tag.ID)
   assert.Equal(t, edited.Color, event.Color)
-  assert.Equal(t, edited.AuthorEmail, event.AuthorEmail)
+  assert.Equal(t, edited.Author.Email, event.Author.Email)
   assert.Equal(t, edited.Location, event.Location)
   assert.Equal(t, edited.Repeat.Value, event.Repeat.Value)
 }
@@ -129,6 +141,12 @@ func TestDeleteEvent(t *testing.T) {
     t.Fatal(err)
   }
 
+  user := domain.User{
+    Email: email,
+    Name: "山田 太郎",
+    IsStudent: true,
+  }
+
   event := domain.ConstructEvent(
     id,
     date,
@@ -137,7 +155,7 @@ func TestDeleteEvent(t *testing.T) {
     "Detail",
     tag,
     "#000",
-    email,
+    user,
     "1号館",
     domain.ConstructRepeat(
       domain.Week,
@@ -164,7 +182,7 @@ func TestDeleteEvent(t *testing.T) {
   assert.Equal(t, deleted.Detail, event.Detail)
   assert.Equal(t, deleted.Tag.ID, event.Tag.ID)
   assert.Equal(t, deleted.Color, event.Color)
-  assert.Equal(t, deleted.AuthorEmail, event.AuthorEmail)
+  assert.Equal(t, deleted.Author.Email, event.Author.Email)
   assert.Equal(t, deleted.Location, event.Location)
   assert.Equal(t, deleted.Repeat.Value, event.Repeat.Value)
 }
@@ -183,6 +201,12 @@ func TestFetchMonthlyEvent(t *testing.T) {
     t.Fatal(err)
   }
 
+  user := domain.User{
+    Email: email,
+    Name: "山田 太郎",
+    IsStudent: true,
+  }
+
   event := domain.ConstructEvent(
     domain.ID("0"),
     date,
@@ -191,7 +215,7 @@ func TestFetchMonthlyEvent(t *testing.T) {
     "Detail",
     tag,
     "#000",
-    email,
+    user,
     "1号館",
     domain.ConstructRepeat(
       domain.Week,
@@ -213,7 +237,7 @@ func TestFetchMonthlyEvent(t *testing.T) {
   assert.Equal(t, events[0].Detail, event.Detail)
   assert.Equal(t, events[0].Tag.ID, event.Tag.ID)
   assert.Equal(t, events[0].Color, event.Color)
-  assert.Equal(t, events[0].AuthorEmail, event.AuthorEmail)
+  assert.Equal(t, events[0].Author.Email, event.Author.Email)
   assert.Equal(t, events[0].Location, event.Location)
   assert.Equal(t, events[0].Repeat.Value, event.Repeat.Value)
 }

@@ -28,8 +28,8 @@ type Tag struct {
   ID ID `gorm:"primaryKey"`
   Name string
   Color string
-  Admin []User
-  Member []User
+  Admin []User `gorm:"many2many:user_admins;"`
+  Member []User `gorm:"many2many:user_members;"`
   Type TagType
 }
 

@@ -30,7 +30,7 @@ func (repo *EventRepository) UpdateEvent(event domain.Event) (domain.Event, erro
       repo.events[i].Detail = event.Detail
       repo.events[i].Tag = event.Tag
       repo.events[i].Color = event.Color
-      repo.events[i].AuthorEmail = event.AuthorEmail
+      repo.events[i].Author = event.Author
       repo.events[i].Location = event.Location
       repo.events[i].Repeat = event.Repeat
 

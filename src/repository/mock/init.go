@@ -43,7 +43,7 @@ func ConstructTestData() {
     "This event is created for test",
     Tag.tags[0],
     "#fff",
-    email,
+    User.users[0],
     "8号館",
     domain.ConstructRepeat(
       domain.Week,

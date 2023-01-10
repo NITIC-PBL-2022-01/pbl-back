@@ -1,13 +1,18 @@
 package domain
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type User struct {
-  gorm.Model
-  ID ID `gorm:"primaryKey"`
-  Email Email
+  Email Email `gorm:"primaryKey"`
   Name string
   IsStudent bool
+  CreatedAt time.Time
+  UpdatedAt time.Time
+  DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 func ConstructUser(email Email, name string, isStudent bool) User {

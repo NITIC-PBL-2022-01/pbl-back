@@ -14,10 +14,13 @@ type EventBase struct {
   Title string
   Detail string
   Tag Tag
+  TagID ID
   Color string
-  AuthorEmail Email
+  Author User
+  AuthorID ID
   Location string
   Repeat Repeat
+  RepeatID ID
 }
 
 type Event struct {
@@ -38,7 +41,7 @@ func ConstructEvent(
   detail string,
   tag Tag,
   color string,
-  authorEmail Email,
+  author User,
   location string,
   repeat Repeat,
 ) Event {
@@ -51,7 +54,7 @@ func ConstructEvent(
       Detail: detail,
       Tag: tag,
       Color: color,
-      AuthorEmail: authorEmail,
+      Author: author,
       Location: location,
       Repeat: repeat,
     },
@@ -66,7 +69,7 @@ func ConstructTodo(
   detail string,
   tag Tag,
   color string,
-  authorEmail Email,
+  author User,
   location string,
   repeat Repeat,
   isToDo bool,
@@ -81,7 +84,7 @@ func ConstructTodo(
       Detail: detail,
       Tag: tag,
       Color: color,
-      AuthorEmail: authorEmail,
+      Author: author,
       Location: location,
       Repeat: repeat,
     },
