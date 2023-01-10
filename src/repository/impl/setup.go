@@ -28,7 +28,10 @@ func SetupDB() *gorm.DB {
     panic(err)
   }
 
-  db.AutoMigrate(&domain.Event{}, &domain.ToDo{}, &domain.User{}, &domain.Tag{})
+  err = db.AutoMigrate(&domain.Event{}, &domain.ToDo{}, &domain.User{}, &domain.Tag{})
+  if err != nil {
+    panic(err)
+  }
 
   return db
 }
