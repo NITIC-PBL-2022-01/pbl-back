@@ -6,7 +6,6 @@ import (
 	"os"
 	"testing"
 	"time"
-  "fmt"
 
 	"gorm.io/gorm"
 )
@@ -21,10 +20,6 @@ func InsertTestData(db *gorm.DB) {
 
 	user := domain.ConstructUser(email, "TEST DATA", false)
 
-  users := []domain.User{}
-  db.Find(&users)
-
-  fmt.Println(users)
 	db.Create(&user)
 
 	tag := domain.ConstructTag(domain.ID("0"), "hoge", "#fff", []domain.User{user}, []domain.User{}, domain.None)
