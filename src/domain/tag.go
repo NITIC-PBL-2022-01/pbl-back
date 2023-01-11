@@ -23,6 +23,19 @@ func (t TagType) Parse() string {
 	}
 }
 
+func TagTypeFromString(str string) TagType {
+  switch str {
+  case "HR":
+    return HR
+  case "Class":
+    return Class
+  case "None":
+    return None
+  default:
+    return None
+  }
+}
+
 type Tag struct {
 	gorm.Model
 	ID     ID `gorm:"primaryKey"`
