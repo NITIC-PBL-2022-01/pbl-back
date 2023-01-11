@@ -11,6 +11,9 @@ test:
 	docker-compose exec -T test go test ./...
 	docker-compose down
 
+cleanup-test:
+	docker-compose down
+
 build:
 	go build .
 
