@@ -22,6 +22,15 @@ func InsertTestData(db *gorm.DB) {
 
 	db.Create(&user)
 
+  emailTag, err := domain.ConstructEmail("tag@example.com")
+  if err != nil {
+    panic(err)
+  }
+
+	tagUser := domain.ConstructUser(emailTag, "TAG TARO", true)
+
+  db.Create(&tagUser)
+
 	tag := domain.ConstructTag(domain.ID("0"), "hoge", "#fff", []domain.User{user}, []domain.User{}, domain.None)
 	db.Create(&tag)
 

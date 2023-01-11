@@ -12,6 +12,7 @@ import (
 var (
 	Event = EventRepository{}
   User = UserRepository{}
+  Tag = TagRepository{}
 )
 
 func SetupDB() *gorm.DB {
@@ -39,4 +40,5 @@ func SetupDB() *gorm.DB {
 func SetupRepository(db *gorm.DB) {
   User.db = db
 	Event.db = db
+  Tag.db = db
 }
