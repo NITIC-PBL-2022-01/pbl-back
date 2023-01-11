@@ -1,7 +1,6 @@
 package impl
 
 import (
-	"errors"
 	"nitic-pbl-2022-01/pbl-back/src/domain"
 
 	"gorm.io/gorm"
@@ -12,9 +11,18 @@ type UserRepository struct {
 }
 
 func (r *UserRepository) GetByEmail(email domain.Email) (domain.User, error) {
-  return domain.User{}, errors.New("not implemented")
+  found := domain.User{ Email: email }
+  if err := r.db.First(&found).Error; err != nil {
+    return domain.User{}, err
+  }
+
+  return found, nil
 }
 
 func (r *UserRepository) Create(newobj domain.User) (domain.User, error) {
-  return domain.User{}, errors.New("not implemented")
+  if err := r.db.Create(&newobj).Error; err != nil {
+    return domain.User{}, err
+  }
+
+  return newobj, nil
 }
