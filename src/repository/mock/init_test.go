@@ -7,6 +7,6 @@ import (
 )
 
 func TestMain(m *testing.M) {
-  mock.ConstructTestData()
-  os.Exit(m.Run())
+	mock.ConstructTestData()
+	os.Exit(m.Run())
 }

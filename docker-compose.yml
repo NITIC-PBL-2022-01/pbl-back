@@ -18,7 +18,7 @@ services:
       context: .
       target: setup
     image: pbl-back-test:latest
-    command: go run /src/main.go
+    command: go run /app/main.go
     env_file: .env.test
   production:
     depends_on:

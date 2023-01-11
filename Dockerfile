@@ -1,10 +1,18 @@
 FROM golang:1.19 as setup
 
+ENV GO111MODULE=on
+
 RUN apt-get update && \
     apt-get upgrade -y
 
-ADD . /src
-WORKDIR /src
+WORKDIR /app
+
+COPY go.mod /app
+COPY go.sum /app
+
+RUN go mod download
+
+COPY . /app
 
 FROM setup as build
 CMD ["go", "build", "."]
