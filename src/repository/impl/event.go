@@ -3,7 +3,6 @@ package impl
 import (
 	"nitic-pbl-2022-01/pbl-back/src/domain"
 	"time"
-  "fmt"
 
 	"gorm.io/gorm"
 )
@@ -86,27 +85,23 @@ func (r *EventRepository) FetchMonthlyEvent(email domain.Email, year int, month 
 		return year + 1
 	}
 
+  parseDate := func (year int, month int) time.Time {
+    return time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC)  }
+
 	events := []domain.Event{}
-	if err := r.db.Preload("Repeat").Where("tag_id IN ? AND date BETWEEN '?-?-01 00:00:00' AND '?-?-01 00:00:00'", tags, year, month, nextYear(year, month), nextMonth(month)).Find(&events).Error; err != nil {
+	if err := r.db.Joins("Repeat").Where("tag_id IN ? AND date BETWEEN ? AND ?", tags, parseDate(year, month), parseDate(nextYear(year, month), nextMonth(month))).Find(&events).Error; err != nil {
 		return []domain.Event{}, err
 	}
-
-  fmt.Println(events[0].Repeat)
 
 	repeatEvents := []domain.Event{}
 
   //  repeats.until > '?-?-01 00:00:00' AND AND repeats.since < '?-?-01 00:00:00'
   // , year, month, nextYear(year, month), nextMonth(month)
-  if err := r.db.Table("events").Preload("Repeat").Joins("JOIN repeats ON events.repeat_id = repeats.id").
+  if err := r.db.Joins("Repeat").Joins("JOIN repeats ON events.repeat_id = repeats.id").
 		Where("tag_id IN ?", tags).
 		Find(&repeatEvents).Error; err != nil {
     return []domain.Event{}, err
   }
-
-  fmt.Println(tags)
-  fmt.Println(repeatEvents)
-  fmt.Println(repeatEvents[0].Repeat.Since)
-  fmt.Println(repeatEvents[0].Repeat.Until)
 
   for _, e := range repeatEvents {
     duration := e.Repeat.Until.Sub(e.Repeat.Since)
@@ -146,7 +141,7 @@ func (r *EventRepository) FetchMonthlyEvent(email domain.Email, year int, month 
       count = days
     }
     cache := e
-    for i := 0; i < count ; i++ {
+    for i := 0; i <= count ; i++ {
       if isInclude(addDate(e.Date, i, e.Repeat.Unit)) {
         cache.Date = addDate(e.Date, i, e.Repeat.Unit)
         events = append(events, cache)
