@@ -107,10 +107,10 @@ func TestDeleteEvent(t *testing.T) {
 
 	dist := []domain.Event{}
 	if err = db.Find(&dist).Error; err != nil {
-    t.Fatal(err)
+		t.Fatal(err)
 	}
 
-  assert.Equal(t, 1, len(dist))
+	assert.Equal(t, 1, len(dist))
 }
 
 func TestFetchMonthlyEvent(t *testing.T) {

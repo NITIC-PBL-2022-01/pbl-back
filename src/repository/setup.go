@@ -6,19 +6,20 @@ import (
 )
 
 var (
-  Event EventRepository
-  User UserRepository
-  Tag TagRepository
+	Event      EventRepository
+	User       UserRepository
+	Tag        TagRepository
+	Attendance AttendanceRepository
 )
 
 func SetupRepository(isProd bool) {
-  if isProd {
-    Event = &impl.Event
-    User = &impl.User
-    Tag = &impl.Tag
-  } else {
-    Event = &mock.Event
-    User = &mock.User
-    Tag = &mock.Tag
-  }
+	if isProd {
+		Event = &impl.Event
+		User = &impl.User
+		Tag = &impl.Tag
+	} else {
+		Event = &mock.Event
+		User = &mock.User
+		Tag = &mock.Tag
+	}
 }

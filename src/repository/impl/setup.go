@@ -10,9 +10,10 @@ import (
 )
 
 var (
-	Event = EventRepository{}
-  User = UserRepository{}
-  Tag = TagRepository{}
+	Event      = EventRepository{}
+	User       = UserRepository{}
+	Tag        = TagRepository{}
+	Attendance = AttendanceRepository{}
 )
 
 func SetupDB() *gorm.DB {
@@ -29,7 +30,7 @@ func SetupDB() *gorm.DB {
 		panic(err)
 	}
 
-	err = db.AutoMigrate(&domain.Event{}, &domain.ToDo{}, &domain.User{}, &domain.Tag{})
+	err = db.AutoMigrate(&domain.Event{}, &domain.ToDo{}, &domain.User{}, &domain.Tag{}, &domain.Attendance{})
 	if err != nil {
 		panic(err)
 	}
@@ -38,7 +39,8 @@ func SetupDB() *gorm.DB {
 }
 
 func SetupRepository(db *gorm.DB) {
-  User.db = db
+	User.db = db
 	Event.db = db
-  Tag.db = db
+	Tag.db = db
+	Attendance.db = db
 }
