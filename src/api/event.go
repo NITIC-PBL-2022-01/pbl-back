@@ -15,7 +15,7 @@ func CreateEvent(c *gin.Context) {
 	// FIXME: get from token
 	email, err := domain.ConstructEmail("test-data@example.com")
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -148,7 +148,7 @@ func GetEventWithMonth(c *gin.Context) {
 	// FIXME: get from token
 	email, err := domain.ConstructEmail("test-data@example.com")
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 

@@ -1,6 +1,7 @@
 package api
 
 import (
+	"log"
 	"strconv"
 	"time"
 
@@ -8,7 +9,10 @@ import (
 )
 
 func handleError(c *gin.Context, err error) {
-	c.Error(err).SetType(gin.ErrorTypePublic)
+  e := c.Error(err).SetType(gin.ErrorTypePublic)
+  if e != nil {
+    log.Println(e)
+  }
 }
 
 func strEpochToTime(epoch string) (time.Time, error) {

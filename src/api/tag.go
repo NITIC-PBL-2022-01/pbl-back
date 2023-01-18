@@ -19,7 +19,7 @@ func CreateTagStudent(c *gin.Context) {
 
 	var body reqBody
 	if err := c.BindJSON(&body); err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -29,12 +29,12 @@ func CreateTagStudent(c *gin.Context) {
 	for _, a := range body.AdminEmail {
 		email, err := domain.ConstructEmail(a)
 		if err != nil {
-			c.Error(err).SetType(gin.ErrorTypePublic)
+      handleError(c, err)
 			return
 		}
 		u, err := repository.User.GetByEmail(email)
 		if err != nil {
-			c.Error(err).SetType(gin.ErrorTypePublic)
+      handleError(c, err)
 			return
 		}
 
@@ -44,12 +44,12 @@ func CreateTagStudent(c *gin.Context) {
 	for _, m := range body.MemberEmail {
 		email, err := domain.ConstructEmail(m)
 		if err != nil {
-			c.Error(err).SetType(gin.ErrorTypePublic)
+      handleError(c, err)
 			return
 		}
 		u, err := repository.User.GetByEmail(email)
 		if err != nil {
-			c.Error(err).SetType(gin.ErrorTypePublic)
+      handleError(c, err)
 			return
 		}
 
@@ -58,7 +58,7 @@ func CreateTagStudent(c *gin.Context) {
 
 	id, err := domain.GenerateID()
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -66,7 +66,7 @@ func CreateTagStudent(c *gin.Context) {
 
 	created, err := repository.Tag.CreateTag(tag)
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -86,7 +86,7 @@ func CreateTagTeacher(c *gin.Context) {
 
 	var body reqBody
 	if err := c.BindJSON(&body); err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -96,12 +96,12 @@ func CreateTagTeacher(c *gin.Context) {
 	for _, a := range body.AdminEmail {
 		email, err := domain.ConstructEmail(a)
 		if err != nil {
-			c.Error(err).SetType(gin.ErrorTypePublic)
+      handleError(c, err)
 			return
 		}
 		u, err := repository.User.GetByEmail(email)
 		if err != nil {
-			c.Error(err).SetType(gin.ErrorTypePublic)
+      handleError(c, err)
 			return
 		}
 
@@ -111,12 +111,12 @@ func CreateTagTeacher(c *gin.Context) {
 	for _, m := range body.MemberEmail {
 		email, err := domain.ConstructEmail(m)
 		if err != nil {
-			c.Error(err).SetType(gin.ErrorTypePublic)
+      handleError(c, err)
 			return
 		}
 		u, err := repository.User.GetByEmail(email)
 		if err != nil {
-			c.Error(err).SetType(gin.ErrorTypePublic)
+      handleError(c, err)
 			return
 		}
 
@@ -125,7 +125,7 @@ func CreateTagTeacher(c *gin.Context) {
 
 	id, err := domain.GenerateID()
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -133,7 +133,7 @@ func CreateTagTeacher(c *gin.Context) {
 
 	created, err := repository.Tag.CreateTag(tag)
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -146,13 +146,13 @@ func GetTags(c *gin.Context) {
 	// FIXME: get from token
 	email, err := domain.ConstructEmail("test-data@example.com")
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
 	tags, err := repository.Tag.GetByUserEmail(email)
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -173,7 +173,7 @@ func UpdateTag(c *gin.Context) {
 
 	var body reqBody
 	if err := c.BindJSON(&body); err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -181,7 +181,7 @@ func UpdateTag(c *gin.Context) {
 
 	tag, err := repository.Tag.GetByID(domain.ID(id))
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -190,7 +190,7 @@ func UpdateTag(c *gin.Context) {
 
 	edited, err := repository.Tag.EditTag(tag)
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -205,7 +205,7 @@ func AddMemberToTag(c *gin.Context) {
 
 	var body reqBody
 	if err := c.BindJSON(&body); err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -213,13 +213,13 @@ func AddMemberToTag(c *gin.Context) {
 
 	email, err := domain.ConstructEmail(body.Email)
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
 	user, err := repository.User.GetByEmail(email)
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -227,17 +227,15 @@ func AddMemberToTag(c *gin.Context) {
 
 	switch body.Role {
 	case "ADMIN":
-		c.Error(errors.New("Not implemented")).SetType(gin.ErrorTypePublic)
-		break
+    handleError(c, errors.New("Not implemented"))
 	case "MEMBER":
 		tag, err = repository.Tag.AddMemberToTag(domain.ID(id), []domain.User{user})
 		if err != nil {
-			c.Error(err).SetType(gin.ErrorTypePublic)
+      handleError(c, err)
 			return
 		}
 	default:
-		c.Error(errors.New("Role does not exist")).SetType(gin.ErrorTypePublic)
-		break
+    handleError(c, errors.New("Role does not exist"))
 	}
 
 	c.JSON(200, response.ConvertTag(tag))
@@ -247,13 +245,13 @@ func LeaveFromTag(c *gin.Context) {
 	// FIXME: get from token
 	email, err := domain.ConstructEmail("test-data@example.com")
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
 	user, err := repository.User.GetByEmail(email)
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
@@ -261,7 +259,7 @@ func LeaveFromTag(c *gin.Context) {
 
 	tag, err := repository.Tag.DeleteMemberFromTag(domain.ID(id), []domain.User{user})
 	if err != nil {
-		c.Error(err).SetType(gin.ErrorTypePublic)
+    handleError(c, err)
 		return
 	}
 
