@@ -9,29 +9,29 @@ import (
 )
 
 func TestCreate(t *testing.T) {
-  email, err := domain.ConstructEmail("test@example.com")
-  if err != nil {
-    t.Fatal(err)
-  }
+	email, err := domain.ConstructEmail("test@example.com")
+	if err != nil {
+		t.Fatal(err)
+	}
 
-  user := domain.ConstructUser(email, "THISIS TEST", false)
-  created, err := impl.User.Create(user)
-  if err != nil {
-    t.Fatal(err)
-  }
+	user := domain.ConstructUser(email, "THISIS TEST", false)
+	created, err := impl.User.Create(user)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-  assert.Equal(t, email, created.Email)
-  assert.Equal(t, "THISIS TEST", created.Name)
-  assert.Equal(t, false, created.IsStudent)
+	assert.Equal(t, email, created.Email)
+	assert.Equal(t, "THISIS TEST", created.Name)
+	assert.Equal(t, false, created.IsStudent)
 
-  target := domain.User{ Email: email }
-  if err := db.First(&target).Error; err != nil {
-    t.Fatal(err)
-  }
+	target := domain.User{Email: email}
+	if err := db.First(&target).Error; err != nil {
+		t.Fatal(err)
+	}
 
-  assert.Equal(t, email, target.Email)
-  assert.Equal(t, "THISIS TEST", target.Name)
-  assert.Equal(t, false, target.IsStudent)
+	assert.Equal(t, email, target.Email)
+	assert.Equal(t, "THISIS TEST", target.Name)
+	assert.Equal(t, false, target.IsStudent)
 }
 
 func TestGetByEmail(t *testing.T) {
@@ -40,12 +40,12 @@ func TestGetByEmail(t *testing.T) {
 		panic(err)
 	}
 
-  fetched, err := impl.User.GetByEmail(email)
-  if err != nil {
-    t.Fatal(err)
-  }
+	fetched, err := impl.User.GetByEmail(email)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-  assert.Equal(t, email, fetched.Email)
-  assert.Equal(t, "TEST DATA", fetched.Name)
-  assert.Equal(t, false, fetched.IsStudent)
+	assert.Equal(t, email, fetched.Email)
+	assert.Equal(t, "TEST DATA", fetched.Name)
+	assert.Equal(t, false, fetched.IsStudent)
 }

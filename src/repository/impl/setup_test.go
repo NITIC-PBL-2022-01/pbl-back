@@ -22,14 +22,14 @@ func InsertTestData(db *gorm.DB) {
 
 	db.Create(&user)
 
-  emailTag, err := domain.ConstructEmail("tag@example.com")
-  if err != nil {
-    panic(err)
-  }
+	emailTag, err := domain.ConstructEmail("tag@example.com")
+	if err != nil {
+		panic(err)
+	}
 
 	tagUser := domain.ConstructUser(emailTag, "TAG TARO", true)
 
-  db.Create(&tagUser)
+	db.Create(&tagUser)
 
 	tag := domain.ConstructTag(domain.ID("0"), "hoge", "#fff", []domain.User{user}, []domain.User{}, domain.None)
 	db.Create(&tag)
@@ -56,11 +56,31 @@ func InsertTestData(db *gorm.DB) {
 	)
 
 	db.Create(&event)
+
+	attendance := domain.ConstructAttendance(
+		domain.ID("0"),
+		time.Date(2022, 2, 2, 0, 0, 0, 0, time.Local),
+		2,
+		domain.ID("0"),
+		tag,
+		email,
+		user,
+	)
+
+	db.Create(&attendance)
+
+	attendance.ID = domain.ID("1")
+	attendance.UserEmail = tagUser.Email
+	attendance.User = tagUser
+	attendance.Model.CreatedAt = time.Time{}
+	attendance.Model.UpdatedAt = time.Time{}
+
+	db.Create(&attendance)
 }
 
 func TestMain(m *testing.M) {
 	db = impl.SetupDB()
 	impl.SetupRepository(db)
-  InsertTestData(db)
+	InsertTestData(db)
 	os.Exit(m.Run())
 }
