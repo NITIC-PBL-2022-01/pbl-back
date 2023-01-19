@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"log"
 	"nitic-pbl-2022-01/pbl-back/src/domain"
 	"nitic-pbl-2022-01/pbl-back/src/repository"
 	"nitic-pbl-2022-01/pbl-back/src/response"
@@ -143,12 +144,11 @@ func CreateTagTeacher(c *gin.Context) {
 }
 
 func GetTags(c *gin.Context) {
-	// FIXME: get from token
-	email, err := domain.ConstructEmail("test-data@example.com")
-	if err != nil {
-    handleError(c, err)
-		return
-	}
+  email, err := getEmail(c)
+  if err != nil {
+    log.Println(err)
+    return
+  }
 
 	tags, err := repository.Tag.GetByUserEmail(email)
 	if err != nil {
@@ -242,12 +242,11 @@ func AddMemberToTag(c *gin.Context) {
 }
 
 func LeaveFromTag(c *gin.Context) {
-	// FIXME: get from token
-	email, err := domain.ConstructEmail("test-data@example.com")
-	if err != nil {
-    handleError(c, err)
-		return
-	}
+  email, err := getEmail(c)
+  if err != nil {
+    log.Println(err)
+    return
+  }
 
 	user, err := repository.User.GetByEmail(email)
 	if err != nil {

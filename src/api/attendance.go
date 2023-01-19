@@ -1,6 +1,7 @@
 package api
 
 import (
+	"log"
 	"nitic-pbl-2022-01/pbl-back/src/domain"
 	"nitic-pbl-2022-01/pbl-back/src/repository"
 	"nitic-pbl-2022-01/pbl-back/src/response"
@@ -11,11 +12,11 @@ import (
 )
 
 func CreateAttendance(c *gin.Context) {
-	email, err := domain.ConstructEmail("test-data@example.com")
-	if err != nil {
-		handleError(c, err)
-		return
-	}
+  email, err := getEmail(c)
+  if err != nil {
+    log.Println(err)
+    return
+  }
 
 	type reqBody struct {
 		Date    string
@@ -64,11 +65,11 @@ func CreateAttendance(c *gin.Context) {
 }
 
 func FetchAttendance(c *gin.Context) {
-	email, err := domain.ConstructEmail("test-data@example.com")
-	if err != nil {
-		handleError(c, err)
-		return
-	}
+  email, err := getEmail(c)
+  if err != nil {
+    log.Println(err)
+    return
+  }
 
 	user, err := repository.User.GetByEmail(email)
 	if err != nil {

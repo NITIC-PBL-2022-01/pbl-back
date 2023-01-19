@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"log"
 	"nitic-pbl-2022-01/pbl-back/src/domain"
 	"nitic-pbl-2022-01/pbl-back/src/repository"
 	"nitic-pbl-2022-01/pbl-back/src/response"
@@ -12,11 +13,10 @@ import (
 )
 
 func CreateEvent(c *gin.Context) {
-	// FIXME: get from token
-	email, err := domain.ConstructEmail("test-data@example.com")
-	if err != nil {
-    handleError(c, err)
-		return
+  email, err := getEmail(c)
+  if err != nil {
+    log.Println(err)
+    return
 	}
 
 	type reqBody struct {
@@ -145,10 +145,9 @@ func CreateEvent(c *gin.Context) {
 }
 
 func GetEventWithMonth(c *gin.Context) {
-	// FIXME: get from token
 	email, err := domain.ConstructEmail("test-data@example.com")
 	if err != nil {
-    handleError(c, err)
+		handleError(c, err)
 		return
 	}
 
