@@ -11,6 +11,12 @@ import (
 )
 
 func CreateTagStudent(c *gin.Context) {
+	email, err := getEmail(c)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
 	type reqBody struct {
 		Name        string
 		Color       string
@@ -26,6 +32,14 @@ func CreateTagStudent(c *gin.Context) {
 
 	admin := []domain.User{}
 	member := []domain.User{}
+
+  user, err := repository.User.GetByEmail(email)
+  if err != nil {
+    handleError(c, err)
+    return
+  }
+
+  admin = append(admin, user)
 
 	for _, a := range body.AdminEmail {
 		email, err := domain.ConstructEmail(a)

@@ -25,6 +25,8 @@ func CreateEvent(c *gin.Context) {
 		TagID    string
 		Color    string
 		Duration int
+    Hours    int
+    Minutes  int
 		IsToDo   bool
 		Done     bool
 		Location string
@@ -67,7 +69,7 @@ func CreateEvent(c *gin.Context) {
 		return
 	}
 
-	eventDate := time.Date(year, time.Month(month), date, 0, 0, 0, 0, time.UTC)
+	eventDate := time.Date(year, time.Month(month), date, body.Hours, body.Minutes, 0, 0, time.UTC)
 	duration, err := time.ParseDuration(fmt.Sprintf("%dm", body.Duration))
 	if err != nil {
 		handleError(c, err)
