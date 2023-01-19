@@ -12,74 +12,74 @@ import (
 )
 
 func SignUp(c *gin.Context) {
-  type reqBody struct {
-    Email string
-    Password string
-    IsStudent bool
-  }
+	type reqBody struct {
+		Email     string
+		Password  string
+		IsStudent bool
+	}
 
-  var body reqBody
-  if err := c.BindJSON(&body); err != nil {
-    handleError(c, err)
-    return
-  }
+	var body reqBody
+	if err := c.BindJSON(&body); err != nil {
+		handleError(c, err)
+		return
+	}
 
-  email, err := domain.ConstructEmail(body.Email)
-  if err != nil {
-    handleError(c, err)
-    return
-  }
+	email, err := domain.ConstructEmail(body.Email)
+	if err != nil {
+		handleError(c, err)
+		return
+	}
 
-  user := domain.ConstructUser(email, body.Password, body.IsStudent)
-  
-  _, err = impl.User.Create(user)
-  if err != nil {
-    handleError(c, err)
-    return
-  }
+	user := domain.ConstructUser(email, body.Password, body.IsStudent)
 
-  token, err := auth.Signup(body.Email, body.Password)
-  if err != nil {
-    handleError(c, err)
-    return
-  }
+	_, err = impl.User.Create(user)
+	if err != nil {
+		handleError(c, err)
+		return
+	}
 
-  c.JSON(201, token);
+	token, err := auth.Signup(body.Email, body.Password)
+	if err != nil {
+		handleError(c, err)
+		return
+	}
+
+	c.JSON(201, token)
 }
 
 func Signin(c *gin.Context) {
-  type reqBody struct {
-    Email string
-    Password string
-  }
+	type reqBody struct {
+		Email    string
+		Password string
+	}
 
-  var body reqBody
-  if err := c.BindJSON(&body); err != nil {
-    handleError(c, err)
-    return
-  }
+	var body reqBody
+	if err := c.BindJSON(&body); err != nil {
+		handleError(c, err)
+		return
+	}
 
-  token, err := auth.SignIn(body.Email, body.Password)
-  if err != nil {
-    handleError(c, err)
-    return
-  }
+	token, err := auth.SignIn(body.Email, body.Password)
+	if err != nil {
+		handleError(c, err)
+		return
+	}
 
-  c.JSON(201, token);
+	c.JSON(201, token)
 }
 
 func FetchSelf(c *gin.Context) {
-  email, err := getEmail(c)
-  if err != nil {
-    log.Println(err)
-    return
-  }
+	email, err := getEmail(c)
+	if err != nil {
+		log.Println(err)
+		return
+	}
 
-  user, err := repository.User.GetByEmail(email)
-  if err != nil {
-    handleError(c, err)
-    return
-  }
+	user, err := repository.User.GetByEmail(email)
+	if err != nil {
+		handleError(c, err)
+		return
+	}
 
-  c.JSON(200, response.ConvertUser(user))
+	c.JSON(200, response.ConvertUser(user))
 }

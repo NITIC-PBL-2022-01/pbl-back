@@ -13,10 +13,10 @@ import (
 )
 
 func CreateEvent(c *gin.Context) {
-  email, err := getEmail(c)
-  if err != nil {
-    log.Println(err)
-    return
+	email, err := getEmail(c)
+	if err != nil {
+		log.Println(err)
+		return
 	}
 
 	type reqBody struct {

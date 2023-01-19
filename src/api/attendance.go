@@ -12,11 +12,11 @@ import (
 )
 
 func CreateAttendance(c *gin.Context) {
-  email, err := getEmail(c)
-  if err != nil {
-    log.Println(err)
-    return
-  }
+	email, err := getEmail(c)
+	if err != nil {
+		log.Println(err)
+		return
+	}
 
 	type reqBody struct {
 		Date    string
@@ -65,11 +65,11 @@ func CreateAttendance(c *gin.Context) {
 }
 
 func FetchAttendance(c *gin.Context) {
-  email, err := getEmail(c)
-  if err != nil {
-    log.Println(err)
-    return
-  }
+	email, err := getEmail(c)
+	if err != nil {
+		log.Println(err)
+		return
+	}
 
 	user, err := repository.User.GetByEmail(email)
 	if err != nil {
