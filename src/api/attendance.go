@@ -18,6 +18,7 @@ func CreateAttendance(c *gin.Context) {
 	}
 
 	type reqBody struct {
+    Reason string
 		Date    string
 		Period  int
 		ClassID string
@@ -53,7 +54,7 @@ func CreateAttendance(c *gin.Context) {
 		return
 	}
 
-	attendance := domain.ConstructAttendance(id, time.Unix(int64(d), 0), body.Period, tag.ID, tag, user.Email, user)
+	attendance := domain.ConstructAttendance(id, time.Unix(int64(d), 0), body.Period, body.Reason, tag.ID, tag, user.Email, user)
 	created, err := repository.Attendance.CreateAttendance(attendance)
 	if err != nil {
 		handleError(c, err)

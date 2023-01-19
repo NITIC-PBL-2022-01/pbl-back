@@ -11,6 +11,7 @@ type Attendance struct {
 	ID        ID `gorm:"primaryKey"`
 	Date      time.Time
 	Period    int
+  Reason string
 	TagID     ID
 	Tag       Tag
 	User      User
@@ -21,6 +22,7 @@ func ConstructAttendance(
 	id ID,
 	date time.Time,
 	period int,
+  reason string,
 	tagID ID,
 	tag Tag,
 	userEmail Email,

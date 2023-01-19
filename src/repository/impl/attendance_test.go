@@ -33,7 +33,7 @@ func TestCreateAttendance(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	attendance := domain.ConstructAttendance(attendanceID, date, 1, tag.ID, tag, email, user)
+	attendance := domain.ConstructAttendance(attendanceID, date, 1, "REASON", tag.ID, tag, email, user)
 	created, err := impl.Attendance.CreateAttendance(attendance)
 	if err != nil {
 		t.Fatal(err)
