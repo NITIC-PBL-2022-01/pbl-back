@@ -1,6 +1,7 @@
 package api
 
 import (
+	"log"
 	"nitic-pbl-2022-01/pbl-back/src/domain"
 	"nitic-pbl-2022-01/pbl-back/src/repository"
 	"nitic-pbl-2022-01/pbl-back/src/response"
@@ -11,9 +12,9 @@ import (
 )
 
 func CreateAttendance(c *gin.Context) {
-	email, err := domain.ConstructEmail("test-data@example.com")
+	email, err := getEmail(c)
 	if err != nil {
-		handleError(c, err)
+		log.Println(err)
 		return
 	}
 
@@ -65,9 +66,9 @@ func CreateAttendance(c *gin.Context) {
 }
 
 func FetchAttendance(c *gin.Context) {
-	email, err := domain.ConstructEmail("test-data@example.com")
+	email, err := getEmail(c)
 	if err != nil {
-		handleError(c, err)
+		log.Println(err)
 		return
 	}
 

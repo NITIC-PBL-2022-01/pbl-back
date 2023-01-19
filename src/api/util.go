@@ -1,7 +1,9 @@
 package api
 
 import (
+	"errors"
 	"log"
+	"nitic-pbl-2022-01/pbl-back/src/domain"
 	"strconv"
 	"time"
 
@@ -9,10 +11,10 @@ import (
 )
 
 func handleError(c *gin.Context, err error) {
-  e := c.Error(err).SetType(gin.ErrorTypePublic)
-  if e != nil {
-    log.Println(e)
-  }
+	e := c.Error(err).SetType(gin.ErrorTypePublic)
+	if e != nil {
+		log.Println(e)
+	}
 }
 
 func strEpochToTime(epoch string) (time.Time, error) {
@@ -31,4 +33,14 @@ func fold[T any, S any](array []T, fn func(a T) S) []S {
 	}
 
 	return newArray
+}
+
+func getEmail(c *gin.Context) (domain.Email, error) {
+	email, exist := c.Get("email")
+	if !exist {
+		c.JSON(401, map[string]string{"message": "Unauthorized"})
+		return domain.Email(""), errors.New("Unauthorized")
+	}
+
+	return email.(domain.Email), nil
 }
