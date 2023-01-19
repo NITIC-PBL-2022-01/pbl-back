@@ -61,6 +61,7 @@ func InsertTestData(db *gorm.DB) {
 		domain.ID("0"),
 		time.Date(2022, 2, 2, 0, 0, 0, 0, time.Local),
 		2,
+    "REASON",
 		domain.ID("0"),
 		tag,
 		email,
